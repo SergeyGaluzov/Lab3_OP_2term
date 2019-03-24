@@ -1,4 +1,4 @@
 #pragma once
 #include <string>
 using namespace std;
-void generate_map(ifstream & input);
+string* generate_map(ifstream & input, int rows);

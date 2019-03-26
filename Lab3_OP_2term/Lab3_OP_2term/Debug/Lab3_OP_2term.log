@@ -1,4 +1,2 @@
-﻿  Node.cpp
-  Realization.cpp
-  Создание кода...
-  Lab3_OP_2term.vcxproj -> C:\Users\Сергей\GitHub\Lab3_OP_2term\Lab3_OP_2term\Debug\Lab3_OP_2term.exe
+﻿Main.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl dijkstra_algorithm(int,int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *,int,int,int,int)" (?dijkstra_algorithm@@YAXHHPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HHHH@Z) в функции _main
+C:\Users\Сергей\GitHub\Lab3_OP_2term\Lab3_OP_2term\Debug\Lab3_OP_2term.exe : fatal error LNK1120: неразрешенных внешних элементов: 1

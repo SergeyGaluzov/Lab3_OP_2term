@@ -3,6 +3,7 @@
 #include <string>
 #include "Generate_map.h"
 #include "Realization.h"
+#include "Node.h"
 using namespace std;
 int main()
 {
@@ -27,7 +28,7 @@ int main()
 		cin >> x_start >> y_start;
 		cout << "Please, input the coordinates of the finish: ";
 		cin >> x_finish >> y_finish;
-		dijkstra_algorithm(x_start, y_start, map, x_finish, y_finish, rows, cols);
+		A_star(map, rows, cols, x_start, y_start, x_finish, y_finish);
 	}
 	input.close();
 	output.close();

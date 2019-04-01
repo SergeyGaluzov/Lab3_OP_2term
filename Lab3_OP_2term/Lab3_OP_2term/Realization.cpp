@@ -9,13 +9,13 @@ void A_star(string* map, int rows, int cols, int x_start, int y_start, int x_fin
 	Node start(map, x_start, y_start, x_finish, y_finish);
 	Queue closed(map, rows, cols, x_finish, y_finish, x_start, y_start);
 	Queue opened(map, rows, cols, x_finish, y_finish, x_start, y_start);
+	vector <Node *> neighboors;
 	opened.insert(&start);
 	Node *curr = opened.low_pr();
-	while (curr->x != x_finish && curr->y != y_finish)
+	while (curr->x != x_finish || curr->y != y_finish)
 	{
 		curr = opened.remove();
 		closed.insert(curr);
-		vector <Node *> neighboors;
 		neighboors.push_back(curr->north);
 		neighboors.push_back(curr->east);
 		neighboors.push_back(curr->south);
@@ -25,17 +25,17 @@ void A_star(string* map, int rows, int cols, int x_start, int y_start, int x_fin
 			int cost = curr->distance + (abs(neighboors[i]->x - curr->x) + abs(neighboors[i]->y - curr->y));
 			if (opened.check(neighboors[i]) && cost < neighboors[i]->distance)
 			{
-				opened.remove();
+				opened.remove(neighboors[i]);
 			}
-			if (closed.check(neighboors[i]) && cost < neighboors[i]->distance)
+			if (closed.check(neighboors[i]))
 			{
-				closed.remove();
+				continue;
 			}
 			if (!opened.check(neighboors[i]) && !closed.check(neighboors[i]))
 			{
 				neighboors[i]->distance = cost;
-				opened.insert(neighboors[i]);
 				neighboors[i]->priority = neighboors[i]->distance + neighboors[i]->heuristic;
+				opened.insert(neighboors[i]);
 				neighboors[i]->parent = curr;
 			}
 		}

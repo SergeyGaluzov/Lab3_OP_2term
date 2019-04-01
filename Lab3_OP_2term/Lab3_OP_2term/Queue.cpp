@@ -124,6 +124,7 @@ void Queue::insert(Node *temp)
 		{
 			head = tail = temp;
 			temp->next = nullptr;
+			temp->prev = nullptr;
 		}
 		else
 			if (size == 1)
@@ -131,13 +132,13 @@ void Queue::insert(Node *temp)
 				if (temp->priority >= head->priority)
 				{
 					temp->next = head;
-					temp->parent = nullptr;
-					head->parent = temp;
+					temp->prev = nullptr;
+					head->prev = temp;
 					head = temp;
 				}
 				else
 				{
-					temp->parent = tail;
+					temp->prev = tail;
 					temp->next = nullptr;
 					tail->next = temp;
 					tail = temp;
@@ -154,8 +155,8 @@ void Queue::insert(Node *temp)
 				if (insertion == head)
 				{
 					head = temp;
-					insertion->parent = head;
-					head->parent = nullptr;
+					insertion->prev = head;
+					head->prev = nullptr;
 				}
 				else
 				{
@@ -164,13 +165,13 @@ void Queue::insert(Node *temp)
 						if (temp->priority >= insertion->priority)
 						{
 							temp->next = tail;
-							temp->parent = tail->parent;
-							tail->parent->next = temp;
-							tail->parent = temp;
+							temp->prev = tail->prev;
+							tail->prev->next = temp;
+							tail->prev = temp;
 						}
 						else
 						{
-							temp->parent = tail;
+							temp->prev = tail;
 							tail->next = temp;
 							tail = temp;
 							tail->next = nullptr;
@@ -178,10 +179,10 @@ void Queue::insert(Node *temp)
 					}
 					else
 					{
-						insertion->parent->next = temp;
-						temp->parent = insertion->parent;
+						insertion->prev->next = temp;
+						temp->prev = insertion->prev;
 						temp->next = insertion;
-						insertion->parent = temp;
+						insertion->prev = temp;
 					}
 				}
 			}
@@ -193,7 +194,7 @@ Node *Queue::remove()
 	Node *del = tail;
 	if (size > 1)
 	{
-		tail = tail->parent;
+		tail = tail->prev;
 		tail->next = nullptr;
 		size--;
 		return del;
@@ -205,31 +206,46 @@ Node *Queue::remove()
 		return del;
 	}
 }
+void Queue::remove(Node *temp)
+{
+	Node *del = tail;
+	if (size > 0)
+	{
+		if (temp->x == tail->x && temp->y == tail->y)
+		{
+			tail = tail->prev;
+			tail->next = nullptr;
+			size--;
+			return;
+		}
+		while (tail != head)
+		{
+			tail = tail->prev;
+			if (temp->x == tail->x && temp->y == tail->y)
+			{
+				tail->prev->next = tail->next;
+				tail->next->prev = tail->prev;
+				tail = del; 
+				return;
+			}
+		}
+		if (temp->x == head->x && temp->y == head->y)
+		{
+			head = head->next;
+			head->prev = nullptr;
+			size--;
+			return;
+		}
+	}
+}
 Node* Queue::low_pr()
 {
-		Node *p = head;
-		if (size == 1)
+		if (size)
 		{
-			return p;
+			return tail;
 		}
 		else
 		{
-			if (size)
-			{
-				double min_pr = head->priority;
-				Node *k = head;
-				while (head->next != nullptr)
-				{
-					if (head->next->priority < head->priority)
-					{
-						p = head->next;
-					}
-					head = head->next;
-				}
-				head = k;
-				return p;
-			}
-			else 
 			return nullptr;
 		}
 }
@@ -237,9 +253,9 @@ bool Queue::check(Node *neighboor)
 {
 	if (!size) return false;
 	Node *k = head;
-	while (head->next != nullptr)
+	while (head != nullptr)
 	{
-		if (neighboor->x == k->x && neighboor->y == k->y)
+		if (neighboor->x == head->x && neighboor->y == head->y)
 		{
 			head = k;
 			return true;

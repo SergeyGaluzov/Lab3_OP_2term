@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <iostream>
+#include <fstream>
 #include <string>
 #include "Generate_map.h"
 #include "Realization.h"

@@ -8,6 +8,7 @@ public:
 	void insert(Node *temp);
 	Node *low_pr();
 	Node* remove();
+	void remove(Node *temp);
 	bool check(Node *neighboor);
 	Queue *closed;
 	int x_finish;

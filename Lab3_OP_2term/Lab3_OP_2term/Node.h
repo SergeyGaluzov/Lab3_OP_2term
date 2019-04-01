@@ -14,6 +14,7 @@ public:
 	int distance;
 	Node *parent;
 	Node *next;
+	Node *prev;
 	Node(string *map, int x_start, int y_start, int x_finish, int y_finish);
 	Node(string *map, int x, int y, int x_start, int y_start, int x_finish, int y_finish);
 };

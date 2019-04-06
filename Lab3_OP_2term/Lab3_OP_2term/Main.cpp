@@ -30,7 +30,7 @@ int main()
 		cin >> x_start >> y_start;
 		cout << "Please, input the coordinates of the finish: ";
 		cin >> x_finish >> y_finish;
-		A_star(map, rows, cols, x_start, y_start, x_finish, y_finish);
+		A_star(map, rows, cols, x_start, y_start, x_finish, y_finish, output);
 	}
 	input.close();
 	output.close();

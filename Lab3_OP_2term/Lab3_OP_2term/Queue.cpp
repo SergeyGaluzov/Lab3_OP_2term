@@ -225,7 +225,7 @@ void Queue::remove(Node *temp)
 			{
 				tail->prev->next = tail->next;
 				tail->next->prev = tail->prev;
-				tail = del; 
+				tail = del;
 				return;
 			}
 		}
@@ -240,14 +240,14 @@ void Queue::remove(Node *temp)
 }
 Node* Queue::low_pr()
 {
-		if (size)
-		{
-			return tail;
-		}
-		else
-		{
-			return nullptr;
-		}
+	if (size)
+	{
+		return tail;
+	}
+	else
+	{
+		return nullptr;
+	}
 }
 bool Queue::check(Node *neighboor)
 {

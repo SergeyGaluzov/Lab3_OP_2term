@@ -4,7 +4,7 @@
 class Queue
 {
 public:
-	Queue(string *map, int rows, int cols, int x_finish, int y_finish, int x_start, int y_start);
+	Queue(string *map, int rows, int cols, int x_finish, int y_finish, int x_start, int y_start, int x_complication, int y_complication);
 	void insert(Node *temp);
 	Node *low_pr();
 	Node* remove();
@@ -13,6 +13,8 @@ public:
 	Queue *closed;
 	int x_finish;
 	int y_finish;
+	int x_complication;
+	int y_complication;
 	int x_start;
 	int y_start;
 	int rows;

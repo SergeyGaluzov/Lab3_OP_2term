@@ -1,8 +1,10 @@
 #include "Queue.h"
-Queue::Queue(string *map, int rows, int cols, int x_finish, int y_finish, int x_start, int y_start)
+Queue::Queue(string *map, int rows, int cols, int x_finish, int y_finish, int x_start, int y_start, int x_complication, int y_complication)
 {
 	this->x_finish = x_finish;
 	this->y_finish = y_finish;
+	this->x_complication = x_complication;
+	this->y_complication = y_complication;
 	this->x_start = x_start;
 	this->y_start = y_start;
 	this->map = map;

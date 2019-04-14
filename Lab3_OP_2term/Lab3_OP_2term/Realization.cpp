@@ -44,11 +44,11 @@ void draw_path(Queue & closed, string * map, ofstream & output)
 		output << endl;
 	}
 }
-void A_star(string* map, int rows, int cols, int x_start, int y_start, int x_finish, int y_finish, ofstream & output)
+void A_star(string* map, int rows, int cols, int x_start, int y_start, int x_finish, int y_finish, int x_complication, int y_complication, ofstream & output)
 {
-	Node start(map, x_start, y_start, x_finish, y_finish);
-	Queue closed(map, rows, cols, x_finish, y_finish, x_start, y_start);
-	Queue opened(map, rows, cols, x_finish, y_finish, x_start, y_start);
+	Node start(map, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
+	Queue closed(map, rows, cols, x_finish, y_finish, x_start, y_start, x_complication,y_complication);
+	Queue opened(map, rows, cols, x_finish, y_finish, x_start, y_start, x_complication, y_complication);
 	vector <Node *> neighboors;
 	opened.insert(&start);
 	Node *curr = opened.low_pr();

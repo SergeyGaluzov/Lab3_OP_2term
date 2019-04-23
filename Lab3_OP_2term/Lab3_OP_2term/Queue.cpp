@@ -1,5 +1,5 @@
 #include "Queue.h"
-Queue::Queue(string *map, int rows, int cols, int x_finish, int y_finish, int x_start, int y_start)
+Queue::Queue(string *map, int rows, int cols, int x_finish, int y_finish, int x_start, int y_start, int x_complication, int y_complication)
 {
 	this->x_finish = x_finish;
 	this->y_finish = y_finish;
@@ -9,7 +9,7 @@ Queue::Queue(string *map, int rows, int cols, int x_finish, int y_finish, int x_
 	this->rows = rows;
 	this->cols = cols;
 }
-void Queue::insert(Node *temp)
+void Queue::insert(Node *temp, int x_complication, int y_complication)
 {
 	if (temp->data != '#')
 	{
@@ -17,8 +17,8 @@ void Queue::insert(Node *temp)
 		{
 			temp->north = nullptr;
 			temp->west = nullptr;
-			temp->south = new Node(map, temp->x + 1, temp->y, x_start, y_start, x_finish, y_finish);
-			temp->east = new Node(map, temp->x, temp->y + 1, x_start, y_start, x_finish, y_finish);
+			temp->south = new Node(map, temp->x + 1, temp->y, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
+			temp->east = new Node(map, temp->x, temp->y + 1, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
 			temp->north->parent = temp;
 			temp->west->parent = temp;
 			temp->south->parent = temp;
@@ -29,8 +29,8 @@ void Queue::insert(Node *temp)
 			{
 				temp->north = nullptr;
 				temp->east = nullptr;
-				temp->south = new Node(map, temp->x + 1, temp->y, x_start, y_start, x_finish, y_finish);
-				temp->west = new Node(map, temp->x, temp->y - 1, x_start, y_start, x_finish, y_finish);
+				temp->south = new Node(map, temp->x + 1, temp->y, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
+				temp->west = new Node(map, temp->x, temp->y - 1, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
 				temp->north->parent = temp;
 				temp->west->parent = temp;
 				temp->south->parent = temp;
@@ -40,9 +40,9 @@ void Queue::insert(Node *temp)
 				if (temp->x == 0 && temp->y != cols - 1)
 				{
 					temp->north = nullptr;
-					temp->south = new Node(map, temp->x + 1, temp->y, x_start, y_start, x_finish, y_finish);
-					temp->west = new Node(map, temp->x, temp->y - 1, x_start, y_start, x_finish, y_finish);
-					temp->east = new Node(map, temp->x, temp->y + 1, x_start, y_start, x_finish, y_finish);
+					temp->south = new Node(map, temp->x + 1, temp->y, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
+					temp->west = new Node(map, temp->x, temp->y - 1, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
+					temp->east = new Node(map, temp->x, temp->y + 1, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
 					temp->north->parent = temp;
 					temp->west->parent = temp;
 					temp->south->parent = temp;
@@ -51,10 +51,10 @@ void Queue::insert(Node *temp)
 				else
 					if (temp->x != 0 && temp->y == 0)
 					{
-						temp->north = new Node(map, temp->x - 1, temp->y, x_start, y_start, x_finish, y_finish);
-						temp->south = new Node(map, temp->x + 1, temp->y, x_start, y_start, x_finish, y_finish);
+						temp->north = new Node(map, temp->x - 1, temp->y, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
+						temp->south = new Node(map, temp->x + 1, temp->y, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
 						temp->west = nullptr;
-						temp->east = new Node(map, temp->x, temp->y + 1, x_start, y_start, x_finish, y_finish);
+						temp->east = new Node(map, temp->x, temp->y + 1, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
 						temp->north->parent = temp;
 						temp->west->parent = temp;
 						temp->south->parent = temp;
@@ -63,10 +63,10 @@ void Queue::insert(Node *temp)
 					else
 						if (temp->x != 0 && temp->y != 0)
 						{
-							temp->north = new Node(map, temp->x - 1, temp->y, x_start, y_start, x_finish, y_finish);
-							temp->south = new Node(map, temp->x + 1, temp->y, x_start, y_start, x_finish, y_finish);
-							temp->west = new Node(map, temp->x, temp->y - 1, x_start, y_start, x_finish, y_finish);
-							temp->east = new Node(map, temp->x, temp->y + 1, x_start, y_start, x_finish, y_finish);
+							temp->north = new Node(map, temp->x - 1, temp->y, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
+							temp->south = new Node(map, temp->x + 1, temp->y, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
+							temp->west = new Node(map, temp->x, temp->y - 1, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
+							temp->east = new Node(map, temp->x, temp->y + 1, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
 							temp->north->parent = temp;
 							temp->west->parent = temp;
 							temp->south->parent = temp;
@@ -75,9 +75,9 @@ void Queue::insert(Node *temp)
 						else
 							if (temp->x != 0 && temp->y == cols - 1)
 							{
-								temp->north = new Node(map, temp->x - 1, temp->y, x_start, y_start, x_finish, y_finish);
-								temp->south = new Node(map, temp->x + 1, temp->y, x_start, y_start, x_finish, y_finish);
-								temp->west = new Node(map, temp->x, temp->y - 1, x_start, y_start, x_finish, y_finish);
+								temp->north = new Node(map, temp->x - 1, temp->y, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
+								temp->south = new Node(map, temp->x + 1, temp->y, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
+								temp->west = new Node(map, temp->x, temp->y - 1, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
 								temp->east = nullptr;
 								temp->north->parent = temp;
 								temp->west->parent = temp;
@@ -89,8 +89,8 @@ void Queue::insert(Node *temp)
 								{
 									temp->south = nullptr;
 									temp->west = nullptr;
-									temp->east = new Node(map, temp->x, temp->y + 1, x_start, y_start, x_finish, y_finish);
-									temp->north = new Node(map, temp->x - 1, temp->y, x_start, y_start, x_finish, y_finish);
+									temp->east = new Node(map, temp->x, temp->y + 1, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
+									temp->north = new Node(map, temp->x - 1, temp->y, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
 									temp->north->parent = temp;
 									temp->west->parent = temp;
 									temp->south->parent = temp;
@@ -99,10 +99,10 @@ void Queue::insert(Node *temp)
 								else
 									if (temp->x == rows - 1 && temp->y != 0)
 									{
-										temp->north = new Node(map, temp->x - 1, temp->y, x_start, y_start, x_finish, y_finish);
+										temp->north = new Node(map, temp->x - 1, temp->y, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
 										temp->south = nullptr;
-										temp->west = new Node(map, temp->x, temp->y - 1, x_start, y_start, x_finish, y_finish);
-										temp->east = new Node(map, temp->x, temp->y + 1, x_start, y_start, x_finish, y_finish);
+										temp->west = new Node(map, temp->x, temp->y - 1, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
+										temp->east = new Node(map, temp->x, temp->y + 1, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
 										temp->north->parent = temp;
 										temp->west->parent = temp;
 										temp->south->parent = temp;
@@ -111,9 +111,9 @@ void Queue::insert(Node *temp)
 									else
 										if (temp->x == rows - 1 && temp->y == cols - 1)
 										{
-											temp->north = new Node(map, temp->x - 1, temp->y, x_start, y_start, x_finish, y_finish);
+											temp->north = new Node(map, temp->x - 1, temp->y, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
 											temp->south = nullptr;
-											temp->west = new Node(map, temp->x, temp->y - 1, x_start, y_start, x_finish, y_finish);
+											temp->west = new Node(map, temp->x, temp->y - 1, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
 											temp->east = nullptr;
 											temp->north->parent = temp;
 											temp->west->parent = temp;

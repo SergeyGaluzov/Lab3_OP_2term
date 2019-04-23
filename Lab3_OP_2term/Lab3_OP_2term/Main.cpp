@@ -26,11 +26,14 @@ int main()
 		string *map = generate_map(input, rows);
 		int x_start, y_start;
 		int x_finish, y_finish;
+		int x_complication, y_complication;
 		cout << "Please, input the coordinates of the start: ";
 		cin >> x_start >> y_start;
+		cout << "Please, input the coordinates of the complication: ";
+		cin >> x_complication >> y_complication;
 		cout << "Please, input the coordinates of the finish: ";
 		cin >> x_finish >> y_finish;
-		A_star(map, rows, cols, x_start, y_start, x_finish, y_finish, output);
+		A_star(map, rows, cols, x_start, y_start, x_finish, y_finish, x_complication, y_complication, output);
 	}
 	input.close();
 	output.close();

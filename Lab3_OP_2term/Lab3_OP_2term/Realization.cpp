@@ -44,25 +44,33 @@ void draw_path(Queue & closed, string * map, ofstream & output)
 		output << endl;
 	}
 }
-void A_star(string* map, int rows, int cols, int x_start, int y_start, int x_finish, int y_finish, ofstream & output)
+void A_star(string* map, int rows, int cols, int x_start, int y_start, int x_finish, int y_finish, int x_complication, int y_complication, ofstream & output)
 {
-	Node start(map, x_start, y_start, x_finish, y_finish);
-	Queue closed(map, rows, cols, x_finish, y_finish, x_start, y_start);
-	Queue opened(map, rows, cols, x_finish, y_finish, x_start, y_start);
+	Node start(map, x_start, y_start, x_finish, y_finish, x_complication, y_complication);
+	Queue closed(map, rows, cols, x_finish, y_finish, x_start, y_start, x_complication, y_complication);
+	Queue opened(map, rows, cols, x_finish, y_finish, x_start, y_start, x_complication, y_complication);
 	vector <Node *> neighboors;
-	opened.insert(&start);
+	opened.insert(&start, x_complication, y_complication);
 	Node *curr = opened.low_pr();
 	while (curr->x != x_finish || curr->y != y_finish)
 	{
 		curr = opened.remove();
-		closed.insert(curr);
+		closed.insert(curr, x_complication, y_complication);
 		neighboors.push_back(curr->north);
 		neighboors.push_back(curr->east);
 		neighboors.push_back(curr->south);
 		neighboors.push_back(curr->west);
 		for (int i = 0; i < neighboors.size(); i++)
 		{
-			int cost = curr->distance + (abs(neighboors[i]->x - curr->x) + abs(neighboors[i]->y - curr->y));
+			int cost;
+			if (neighboors[i]->x == x_complication && neighboors[i]->y == y_complication)
+			{
+				cost = curr->distance + (abs(neighboors[i]->x - curr->x)+ 500 + abs(neighboors[i]->y - curr->y)+ 500);
+			}
+			else
+			{
+				cost = curr->distance + (abs(neighboors[i]->x - curr->x) + abs(neighboors[i]->y - curr->y));
+			}
 			if (opened.check(neighboors[i]) && cost < neighboors[i]->distance)
 			{
 				opened.remove(neighboors[i]);
@@ -75,7 +83,7 @@ void A_star(string* map, int rows, int cols, int x_start, int y_start, int x_fin
 			{
 				neighboors[i]->distance = cost;
 				neighboors[i]->priority = neighboors[i]->distance + neighboors[i]->heuristic;
-				opened.insert(neighboors[i]);
+				opened.insert(neighboors[i], x_complication, y_complication);
 				neighboors[i]->parent = curr;
 			}
 		}
